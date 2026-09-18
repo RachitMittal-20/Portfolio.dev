@@ -1,11 +1,22 @@
-.page {
+.screen {
   display: flex;
-  min-height: 100vh;
+  height: 100vh;
   align-items: center;
   justify-content: center;
+  border-bottom: 1px solid var(--stone-200);
 }
 
-.line {
-  font-size: 1.25rem;
-  letter-spacing: 0.02em;
+.screen:nth-child(odd) {
+  background: var(--stone-50);
+}
+
+.screen:nth-child(even) {
+  background: var(--stone-200);
+}
+
+.number {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 600;
+  font-size: var(--text-display-xl);
+  color: var(--ink-900);
 }
