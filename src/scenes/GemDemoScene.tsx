@@ -7,6 +7,11 @@
 // goes through the shared ticker registry instead of its own useFrame, so
 // <SceneCanvas/>'s "demand" ↔ "always" frameloop switch has something to
 // react to, and everything can be paused from one place.
+//
+// Also reads the performance tier from src/store/scene.ts to simplify
+// itself on low-end devices: fewer cloud layers, and a cheaper (lower)
+// noise sampling on the gem's material — the concrete example the tier
+// exists to enable.
 import { useEffect, useMemo, useRef } from "react";
 import type { Group } from "three";
 import { GemPlaceholder, PlinthPlaceholder } from "@/lib/three/ModelSlot";
@@ -16,14 +21,21 @@ import { useSceneStore } from "@/store/scene";
 const ROTATE_TICKER_ID = "gem-demo:rotate";
 const SKY_TICKER_ID = "gem-demo:sky-drift";
 
+// TODO(phase 4+): retune emissive — bumped hot (4x the normal 0.4) purely
+// so bloom is obviously visible in a screenshot/regression check while
+// there's no real hero asset yet. Bring this back down once one exists.
+const GEM_EMISSIVE_INTENSITY = 1.6;
+
 export default function GemDemoScene() {
   const groupRef = useRef<Group>(null);
   const registerTicker = useSceneStore((s) => s.registerTicker);
   const unregisterTicker = useSceneStore((s) => s.unregisterTicker);
+  const performanceTier = useSceneStore((s) => s.performanceTier);
+  const reduced = performanceTier === "reduced";
 
   const sky = useMemo(() => createSkyDome(), []);
-  const clouds = useMemo(
-    () => [
+  const clouds = useMemo(() => {
+    const layers = [
       createCloudLayer({ x: -4, y: 7, z: -22, speed: 0.045, amplitude: 5 }),
       createCloudLayer({
         x: 5,
@@ -45,9 +57,10 @@ export default function GemDemoScene() {
         amplitude: 4,
         opacity: 0.9,
       }),
-    ],
-    [],
-  );
+    ];
+    // Fewer overlapping translucent cards on low-end tiers.
+    return reduced ? layers.slice(0, 1) : layers;
+  }, [reduced]);
 
   useEffect(() => {
     registerTicker(ROTATE_TICKER_ID, (_state, delta) => {
@@ -90,7 +103,10 @@ export default function GemDemoScene() {
       <group position={[0, -0.6, 0]}>
         <PlinthPlaceholder />
         <group ref={groupRef} position={[0, 0.9, 0]}>
-          <GemPlaceholder />
+          <GemPlaceholder
+            emissiveIntensity={GEM_EMISSIVE_INTENSITY}
+            noiseIntensity={reduced ? 0.02 : undefined}
+          />
         </group>
       </group>
     </>

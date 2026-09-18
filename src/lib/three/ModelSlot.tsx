@@ -74,21 +74,30 @@ export default function ModelSlot({ name, placeholder }: ModelSlotProps) {
 const gemGeometry = new THREE.IcosahedronGeometry(1, 0).toNonIndexed();
 gemGeometry.computeVertexNormals();
 
+interface GemPlaceholderProps {
+  emissiveIntensity?: number;
+  noiseIntensity?: number;
+}
+
 /**
  * A small faceted low-poly gem, toon-shaded with a soft arcane glow.
  * Characters/heroes get a visible outline (section 1.2) — the gem stands
  * in for one here.
  */
-export function GemPlaceholder() {
+export function GemPlaceholder({
+  emissiveIntensity = 0.4,
+  noiseIntensity,
+}: GemPlaceholderProps = {}) {
   const outline = useMemo(() => createOutlineMaterial({ color: "#3f5450", thickness: 0.03 }), []);
   const material = useMemo(
     () =>
       createToonMaterial({
         color: "#5fd3c6",
         emissive: "#2f8f86",
-        emissiveIntensity: 0.4,
+        emissiveIntensity,
+        noiseIntensity,
       }),
-    [],
+    [emissiveIntensity, noiseIntensity],
   );
 
   return (
