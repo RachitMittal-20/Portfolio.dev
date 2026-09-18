@@ -1,0 +1,110 @@
+/*
+ * Global reset + base styles. Design tokens (colour, spacing, type, etc.)
+ * live in ./tokens.css and are imported first so every rule below can
+ * reference them.
+ */
+@import "./tokens.css";
+
+/* ---------------------------------------------------------------------
+ * Modern reset
+ * ------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100%;
+  font-family: var(--font-body), Arial, Helvetica, sans-serif;
+  font-size: var(--text-base);
+  line-height: 1.5;
+  color: var(--ink-900);
+  background: var(--stone-50);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  position: relative;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+/* ---------------------------------------------------------------------
+ * Grain overlay — a tiny tiled SVG noise texture, fixed above everything,
+ * inert to input. Keeps painted-clay renders from reading as flat "CG"
+ * (docs/BUILD_PLAN.md section 1.2).
+ * ------------------------------------------------------------------- */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  opacity: 0.06;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+
+/* ---------------------------------------------------------------------
+ * Selection + focus
+ * ------------------------------------------------------------------- */
+::selection {
+  background: var(--ember-500);
+  color: var(--stone-50);
+}
+
+:focus-visible {
+  outline: 2px solid var(--arcane-400);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* ---------------------------------------------------------------------
+ * Reduced motion — scrubs/parallax are turned off at the component level
+ * (docs/BUILD_PLAN.md section 1.5); this is the global backstop that caps
+ * any remaining CSS transition/animation so nothing runs long enough to
+ * feel like motion, while short fades still read as fades.
+ * ------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.2s !important;
+    animation-duration: 0.2s !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}

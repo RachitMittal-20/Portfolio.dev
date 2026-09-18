@@ -1,0 +1,101 @@
+/*
+ * Design tokens — single source of truth for colour, spacing, type, radii,
+ * z-index and grid. Never hardcode these values in components; reference the
+ * CSS variables below instead (see CLAUDE.md "Project facts").
+ */
+:root {
+  /* ---------------------------------------------------------------------
+   * Palette — "Dawn Ember" (docs/BUILD_PLAN.md section 1.3)
+   * Accents (ember / arcane / gold) should cover < 10% of any screen.
+   * ------------------------------------------------------------------- */
+  --stone-50: #f6f1e7; /* ivory — page bg, light surfaces */
+  --stone-200: #e4d8c3; /* sandstone */
+  --stone-400: #b9a68a; /* warm stone shadow */
+  --ink-900: #1b1a22; /* text, dark UI */
+  --sky-200: #cfe3ee; /* sky */
+  --sky-400: #8db6cf; /* deep sky */
+  --moss-500: #5e7f5a; /* mountains / forest */
+  --ember-500: #e8703a; /* PRIMARY ACCENT — runes, embers, CTAs */
+  --ember-300: #f4a874; /* ember glow */
+  --arcane-400: #5fd3c6; /* secondary accent — gem core, AI chat, magic */
+  --night-900: #10202a; /* loader + playground dark surfaces */
+  --gold-400: #e3b85c; /* treasure, stamps */
+
+  /* ---------------------------------------------------------------------
+   * Motion easings (docs/BUILD_PLAN.md section 1.5). Keep in sync with
+   * the TS source of truth at src/lib/motion/easings.ts — never invent
+   * new curves in either place.
+   * ------------------------------------------------------------------- */
+  --ease-main: cubic-bezier(0.16, 1, 0.1, 1); /* most UI + reveals */
+  --ease-expo: cubic-bezier(0.19, 1, 0.22, 1); /* big movements, page transitions */
+  --ease-in-out: cubic-bezier(0.45, 0, 0.2, 1); /* loops, camera */
+  --ease-std: cubic-bezier(0.4, 0, 0.2, 1); /* small hovers */
+
+  /* ---------------------------------------------------------------------
+   * Spacing scale — 4px base unit.
+   * ------------------------------------------------------------------- */
+  --space-1: 0.25rem; /* 4px */
+  --space-2: 0.5rem; /* 8px */
+  --space-3: 0.75rem; /* 12px */
+  --space-4: 1rem; /* 16px */
+  --space-5: 1.25rem; /* 20px */
+  --space-6: 1.5rem; /* 24px */
+  --space-8: 2rem; /* 32px */
+  --space-10: 2.5rem; /* 40px */
+  --space-12: 3rem; /* 48px */
+  --space-16: 4rem; /* 64px */
+  --space-20: 5rem; /* 80px */
+  --space-24: 6rem; /* 96px */
+  --space-32: 8rem; /* 128px */
+  --space-40: 10rem; /* 160px */
+  --space-48: 12rem; /* 192px */
+  --space-64: 16rem; /* 256px */
+
+  /* ---------------------------------------------------------------------
+   * Fluid type scale — clamp(min, preferred, max), scales between a
+   * ~360px phone and a ~1440px desktop viewport.
+   * ------------------------------------------------------------------- */
+  --text-xs: clamp(0.75rem, 0.72rem + 0.15vw, 0.8125rem);
+  --text-sm: clamp(0.875rem, 0.84rem + 0.2vw, 0.9375rem);
+  --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --text-lg: clamp(1.125rem, 1.05rem + 0.35vw, 1.3125rem);
+  --text-xl: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);
+  --text-2xl: clamp(1.5rem, 1.35rem + 0.75vw, 1.875rem);
+  --text-3xl: clamp(1.875rem, 1.6rem + 1.25vw, 2.5rem);
+  --text-display-sm: clamp(2.5rem, 2rem + 2.5vw, 3.5rem);
+  --text-display-md: clamp(3rem, 2.25rem + 3.75vw, 4.5rem);
+  --text-display-lg: clamp(3.5rem, 2.5rem + 5vw, 6rem);
+  --text-display-xl: clamp(4rem, 2.75rem + 6.5vw, 8rem);
+
+  /* ---------------------------------------------------------------------
+   * Radii
+   * ------------------------------------------------------------------- */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-full: 999px;
+
+  /* ---------------------------------------------------------------------
+   * Z-index layers — listed bottom to top of the visual stack.
+   * ------------------------------------------------------------------- */
+  --z-canvas: 0; /* fixed full-screen WebGL canvas */
+  --z-content: 10; /* DOM page content over the canvas */
+  --z-ui: 20; /* header, menu, sound button, HUD */
+  --z-cursor: 30; /* cursor pill */
+  --z-loader: 40; /* gem loader */
+  --z-popup: 50; /* "About this portfolio" and other modal popups */
+
+  /* ---------------------------------------------------------------------
+   * Grid — 12 columns, 24px gutter desktop / 16px mobile.
+   * ------------------------------------------------------------------- */
+  --grid-columns: 12;
+  --grid-gutter: 24px;
+  --grid-margin: var(--space-6);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --grid-gutter: 16px;
+    --grid-margin: var(--space-4);
+  }
+}

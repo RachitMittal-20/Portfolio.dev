@@ -1,0 +1,137 @@
+.page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: var(--space-16) var(--grid-margin) var(--space-48);
+}
+
+.title {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 600;
+  font-size: var(--text-display-sm);
+  letter-spacing: -0.01em;
+}
+
+.note {
+  margin-top: var(--space-2);
+  color: var(--stone-400);
+  font-size: var(--text-sm);
+}
+
+.section {
+  margin-top: var(--space-24);
+}
+
+.sectionTitle {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 500;
+  font-size: var(--text-2xl);
+  margin-bottom: var(--space-6);
+  border-bottom: 1px solid var(--stone-200);
+  padding-bottom: var(--space-2);
+}
+
+/* Palette */
+.swatchGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: var(--grid-gutter);
+}
+
+.swatchCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.swatch {
+  height: 72px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--stone-200);
+}
+
+.swatchLabel {
+  font-size: var(--text-sm);
+}
+
+.swatchToken {
+  font-size: var(--text-xs);
+  color: var(--stone-400);
+}
+
+/* Type scale */
+.typeList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.typeRow {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-6);
+  border-bottom: 1px solid var(--stone-200);
+  padding-bottom: var(--space-4);
+}
+
+.typeLabel {
+  flex: 0 0 6rem;
+  font-size: var(--text-sm);
+  color: var(--stone-400);
+}
+
+.typeSample {
+  font-family: var(--font-display), sans-serif;
+  line-height: 1.1;
+}
+
+/* Easings */
+.easingGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--grid-gutter);
+}
+
+.easingCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.easingTrack {
+  position: relative;
+  height: var(--space-16);
+  background: var(--stone-200);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.easingBox {
+  position: absolute;
+  top: 50%;
+  left: var(--space-2);
+  width: var(--space-10);
+  height: var(--space-10);
+  margin-top: calc(var(--space-10) / -2);
+  background: var(--ember-500);
+  border-radius: var(--radius-sm);
+  animation-name: easing-slide;
+  animation-duration: 1.6s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+@keyframes easing-slide {
+  from {
+    left: var(--space-2);
+  }
+  to {
+    left: calc(100% - var(--space-10) - var(--space-2));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .easingBox {
+    animation: none;
+    left: calc(50% - var(--space-10) / 2);
+  }
+}
