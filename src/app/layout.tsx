@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import Header from "@/components/layout/Header";
+import MenuOverlay from "@/components/layout/MenuOverlay";
 import SmoothScroll from "@/components/motion/SmoothScroll";
+import CursorPill from "@/components/ui/CursorPill";
 import { clashDisplay, satoshi, cinzel } from "./fonts";
 import "@/styles/globals.css";
 
@@ -16,6 +19,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en" className={`${clashDisplay.variable} ${satoshi.variable} ${cinzel.variable}`}>
       <body>
         <SmoothScroll />
+        <Header />
+        <MenuOverlay />
+        <CursorPill />
         {children}
       </body>
     </html>

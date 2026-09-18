@@ -1,0 +1,70 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-ui);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+  padding: var(--space-4) var(--grid-margin);
+  font-family: var(--font-body), sans-serif;
+  font-size: var(--text-sm);
+  color: var(--ink-900);
+  /* The persistent WebGL canvas sits behind the whole page (Phase 2); let
+     clicks reach it everywhere except the header's own interactive bits. */
+  pointer-events: none;
+}
+
+.header > * {
+  pointer-events: auto;
+}
+
+/* Scenes will set this on <html> as the visitor scrolls (Phase 2+). */
+:root[data-theme="dark"] .header {
+  color: var(--stone-50);
+}
+
+.name {
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.tagline {
+  display: none;
+  flex: 1;
+  color: inherit;
+  opacity: 0.7;
+}
+
+@media (min-width: 640px) {
+  .tagline {
+    display: block;
+  }
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+.link {
+  color: inherit;
+  transition: color 0.2s var(--ease-std);
+}
+
+.link:hover {
+  color: var(--ember-500);
+}
+
+.menuButton {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}

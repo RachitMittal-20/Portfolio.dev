@@ -38,6 +38,9 @@ export default function Home() {
 
       <section className={styles.screen}>
         <span className={styles.number}>4</span>
+        <div className={styles.demoStack} data-cursor="Hover — cursor pill demo">
+          <p>Hover anywhere in this section to see the cursor pill.</p>
+        </div>
       </section>
 
       <section className={styles.screen}>

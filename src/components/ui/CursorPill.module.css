@@ -1,0 +1,29 @@
+.pill {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: var(--z-cursor);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full);
+  background: var(--ink-900);
+  color: var(--stone-50);
+  font-family: var(--font-body), sans-serif;
+  font-size: var(--text-sm);
+  white-space: nowrap;
+  pointer-events: none;
+  transform: scale(0);
+  transform-origin: bottom left;
+  will-change: transform;
+}
+
+.action {
+  font-weight: 700;
+  color: var(--ember-300);
+}
+
+.dash {
+  opacity: 0.6;
+}

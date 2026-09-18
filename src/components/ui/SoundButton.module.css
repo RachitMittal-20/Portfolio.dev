@@ -1,0 +1,55 @@
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-8);
+  height: var(--space-8);
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+}
+
+.bars {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  height: var(--space-4);
+}
+
+.bar {
+  width: 3px;
+  height: 100%;
+  background: currentColor;
+  border-radius: var(--radius-full);
+  transform-origin: bottom;
+  transform: scaleY(0.1);
+}
+
+.awaitingPill {
+  position: fixed;
+  right: var(--grid-margin);
+  bottom: var(--space-6);
+  z-index: var(--z-ui);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full);
+  background: var(--ember-300);
+  color: var(--ink-900);
+  font-family: var(--font-body), sans-serif;
+  font-weight: 700;
+  font-size: var(--text-xs);
+  letter-spacing: 0.05em;
+  animation: awaiting-float 2.4s var(--ease-in-out) infinite;
+}
+
+@keyframes awaiting-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
