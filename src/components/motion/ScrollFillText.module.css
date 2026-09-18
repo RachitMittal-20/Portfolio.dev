@@ -1,0 +1,20 @@
+.wrapper {
+  display: grid;
+  font-family: var(--font-display), sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: var(--text-display-xl);
+  line-height: 0.8;
+}
+
+.layer {
+  grid-row: 1;
+  grid-column: 1;
+}
+
+/* Sits visually on top of the dim base layer; its chars animate in on
+   scroll, one after another, "writing" over it. */
+.reveal {
+  position: relative;
+  z-index: 1;
+}
