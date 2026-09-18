@@ -1,37 +1,97 @@
 "use client";
 
 // Temporary demo scene proving the SceneCanvas → SceneManager → ModelSlot →
-// toon material pipeline end-to-end: the procedural gem placeholder,
-// toon-shaded, rotating slowly. Registers its rotation with the shared
-// ticker registry instead of calling useFrame itself, so <SceneCanvas/>'s
-// "demand" ↔ "always" frameloop switch actually has something to react to.
-import { useEffect, useRef } from "react";
+// Painted Clay material pipeline end-to-end: a painted sky with drifting
+// clouds behind an outlined gem (rotating) resting on a non-outlined plinth
+// — the outlined-vs-plain comparison section 1.2 asks for. Every animation
+// goes through the shared ticker registry instead of its own useFrame, so
+// <SceneCanvas/>'s "demand" ↔ "always" frameloop switch has something to
+// react to, and everything can be paused from one place.
+import { useEffect, useMemo, useRef } from "react";
 import type { Group } from "three";
-import { GemPlaceholder } from "@/lib/three/ModelSlot";
+import { GemPlaceholder, PlinthPlaceholder } from "@/lib/three/ModelSlot";
+import { createCloudLayer, createSkyDome, driftCloudLayer } from "@/lib/three/sky";
 import { useSceneStore } from "@/store/scene";
 
-const TICKER_ID = "gem-demo:rotate";
+const ROTATE_TICKER_ID = "gem-demo:rotate";
+const SKY_TICKER_ID = "gem-demo:sky-drift";
 
 export default function GemDemoScene() {
   const groupRef = useRef<Group>(null);
   const registerTicker = useSceneStore((s) => s.registerTicker);
   const unregisterTicker = useSceneStore((s) => s.unregisterTicker);
 
+  const sky = useMemo(() => createSkyDome(), []);
+  const clouds = useMemo(
+    () => [
+      createCloudLayer({ x: -4, y: 7, z: -22, speed: 0.045, amplitude: 5 }),
+      createCloudLayer({
+        x: 5,
+        y: 9,
+        z: -28,
+        width: 18,
+        height: 8,
+        speed: 0.03,
+        amplitude: 7,
+        opacity: 0.6,
+      }),
+      createCloudLayer({
+        x: 0,
+        y: 5.5,
+        z: -18,
+        width: 10,
+        height: 5,
+        speed: 0.06,
+        amplitude: 4,
+        opacity: 0.9,
+      }),
+    ],
+    [],
+  );
+
   useEffect(() => {
-    registerTicker(TICKER_ID, (_state, delta) => {
+    registerTicker(ROTATE_TICKER_ID, (_state, delta) => {
       if (groupRef.current) {
         groupRef.current.rotation.y += delta * 0.4;
       }
     });
-    return () => unregisterTicker(TICKER_ID);
-  }, [registerTicker, unregisterTicker]);
+
+    // The canvas itself already never mounts under prefers-reduced-motion
+    // (src/components/canvas/SceneCanvas.tsx), which makes this check moot
+    // today — but that's a property of *this* app's current fallback
+    // strategy, not of the ticker registry itself. Any later scene that
+    // renders under reduced motion (e.g. a lighter fallback tier) should
+    // still follow this pattern: check once, skip registering time-based
+    // drift, and the frame stays static.
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!reducedMotion) {
+      registerTicker(SKY_TICKER_ID, (state) => {
+        const elapsed = state.clock.elapsedTime;
+        clouds.forEach((layer) => driftCloudLayer(layer, elapsed));
+      });
+    }
+
+    return () => {
+      unregisterTicker(ROTATE_TICKER_ID);
+      unregisterTicker(SKY_TICKER_ID);
+    };
+  }, [registerTicker, unregisterTicker, clouds]);
 
   return (
     <>
       <ambientLight intensity={0.6} />
       <directionalLight position={[3, 4, 5]} intensity={1.2} />
-      <group ref={groupRef}>
-        <GemPlaceholder />
+
+      <primitive object={sky} />
+      {clouds.map((layer) => (
+        <primitive key={layer.mesh.id} object={layer.mesh} />
+      ))}
+
+      <group position={[0, -0.6, 0]}>
+        <PlinthPlaceholder />
+        <group ref={groupRef} position={[0, 0.9, 0]}>
+          <GemPlaceholder />
+        </group>
       </group>
     </>
   );

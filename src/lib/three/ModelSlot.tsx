@@ -74,9 +74,13 @@ export default function ModelSlot({ name, placeholder }: ModelSlotProps) {
 const gemGeometry = new THREE.IcosahedronGeometry(1, 0).toNonIndexed();
 gemGeometry.computeVertexNormals();
 
-/** A small faceted low-poly gem, toon-shaded with a soft arcane glow. */
+/**
+ * A small faceted low-poly gem, toon-shaded with a soft arcane glow.
+ * Characters/heroes get a visible outline (section 1.2) — the gem stands
+ * in for one here.
+ */
 export function GemPlaceholder() {
-  const outline = useMemo(() => createOutlineMaterial("#3f5450"), []);
+  const outline = useMemo(() => createOutlineMaterial({ color: "#3f5450", thickness: 0.03 }), []);
   const material = useMemo(
     () =>
       createToonMaterial({
@@ -89,7 +93,7 @@ export function GemPlaceholder() {
 
   return (
     <group>
-      <mesh geometry={gemGeometry} scale={1.03} material={outline} />
+      <mesh geometry={gemGeometry} scale={1 + outline.thickness} material={outline.material} />
       <mesh geometry={gemGeometry} material={material} />
     </group>
   );
@@ -113,13 +117,26 @@ const bladeGeometry = createBladeGeometry();
 
 /** A simple extruded blade silhouette, toon-shaded like stone/ivory. */
 export function BladePlaceholder() {
-  const outline = useMemo(() => createOutlineMaterial("#8a7a5c"), []);
+  const outline = useMemo(() => createOutlineMaterial({ color: "#8a7a5c", thickness: 0.05 }), []);
   const material = useMemo(() => createToonMaterial({ color: "#e4d8c3" }), []);
 
   return (
     <group>
-      <mesh geometry={bladeGeometry} scale={1.05} material={outline} />
+      <mesh geometry={bladeGeometry} scale={1 + outline.thickness} material={outline.material} />
       <mesh geometry={bladeGeometry} material={material} />
     </group>
   );
+}
+
+const plinthGeometry = new THREE.CylinderGeometry(1.3, 1.5, 0.32, 24).toNonIndexed();
+plinthGeometry.computeVertexNormals();
+
+/**
+ * A simple ground/plinth prop, toon-shaded stone — deliberately no outline
+ * mesh at all, per section 1.2's rule that outlines are for characters
+ * only. Environment and props read as thin-or-none.
+ */
+export function PlinthPlaceholder() {
+  const material = useMemo(() => createToonMaterial({ color: "#b9a68a" }), []);
+  return <mesh geometry={plinthGeometry} material={material} />;
 }
