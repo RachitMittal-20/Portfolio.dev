@@ -13,18 +13,10 @@
 import { useEffect, useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useSceneStore } from "@/store/scene";
+import { detectWebGL } from "@/lib/three/detectWebGL";
 import SceneManager from "./SceneManager";
 import PostProcessing from "./PostProcessing";
 import styles from "./SceneCanvas.module.css";
-
-function detectWebGL(): boolean {
-  try {
-    const canvas = document.createElement("canvas");
-    return !!(canvas.getContext("webgl2") ?? canvas.getContext("webgl"));
-  } catch {
-    return false;
-  }
-}
 
 /**
  * Cheap synchronous first guess at the device's performance tier (docs/
