@@ -1,0 +1,9 @@
+.layer {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-canvas);
+}
+
+.layer canvas {
+  display: block;
+}

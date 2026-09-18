@@ -1,0 +1,12 @@
+/*
+ * Ordinary page content has no z-index of its own, so per CSS's painting
+ * order it would actually render UNDER a positioned z-index:0 element (like
+ * <SceneCanvas/>) rather than over it — positioned descendants paint after
+ * in-flow static ones regardless of DOM order. Promoting content into its
+ * own stacking context at --z-content fixes that, matching the layer order
+ * documented in tokens.css (canvas 0 < content 10 < ui 20 < ...).
+ */
+.content {
+  position: relative;
+  z-index: var(--z-content);
+}
