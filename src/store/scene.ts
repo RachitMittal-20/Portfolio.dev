@@ -41,9 +41,11 @@ interface SceneState {
 }
 
 export const useSceneStore = create<SceneState>((set, get) => ({
-  // Hardcoded for now — Phase 2's scene registry will drive this from
-  // ScrollTrigger per section instead.
-  activeSceneId: "gem-demo",
+  // The Home page's Altar hero is the default; individual routes claim
+  // their own scene on mount via <SetActiveScene/> (e.g. /styleguide keeps
+  // GemDemoScene alive for reference). Real per-section scroll-driven
+  // switching is later work.
+  activeSceneId: "altar",
   camera: { position: [0, 0, 5], target: [0, 0, 0] },
   performanceTier: "full",
   tickers: new Map(),

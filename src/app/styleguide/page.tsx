@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import SetActiveScene from "@/components/canvas/SetActiveScene";
 import styles from "./styleguide.module.css";
 
 // Dev-only living style guide: colour palette, fluid type scale and the
@@ -51,6 +52,7 @@ export default function StyleguidePage() {
 
   return (
     <main className={styles.page}>
+      <SetActiveScene id="gem-demo" />
       <h1 className={styles.title}>The Forge — Styleguide</h1>
       <p className={styles.note}>Dev-only. Not reachable in production.</p>
 

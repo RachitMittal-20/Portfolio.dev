@@ -1,50 +1,49 @@
-import FadeIn from "@/components/motion/FadeIn";
+import SetActiveScene from "@/components/canvas/SetActiveScene";
 import RevealLines from "@/components/motion/RevealLines";
-import ScrollFillText from "@/components/motion/ScrollFillText";
 import styles from "./page.module.css";
 
-// TEMPORARY scroll-feel test + component demo for RevealLines,
-// ScrollFillText and FadeIn (docs/BUILD_PLAN.md section 1.5, prompt 1.4).
-// Replaced scene-by-scene starting with Phase 3 (loader) and Phase 4 (Home
-// scenes).
+// Home (docs/BUILD_PLAN.md section 1.9's site map): Altar hero → Throne
+// Room → Armoury → Balcony. Only the Altar is built out for real this
+// prompt (src/scenes/AltarScene.tsx); the other three are deliberately
+// simple content-only placeholders — just enough structure and `id`s for
+// scroll-driven camera work (a later prompt) to hook into.
 export default function Home() {
   return (
     <main>
-      <section className={styles.screen}>
-        <span className={styles.number}>1</span>
-        <div className={styles.demoStack}>
-          <RevealLines as="h1" trigger="mount">
-            Forged in code. Tempered by AI.
-          </RevealLines>
-          <FadeIn delay={0.6} className={styles.fadeDemo}>
-            <p>This fades in 24px below, right after the line above lands.</p>
-          </FadeIn>
-        </div>
-      </section>
+      <SetActiveScene id="altar" />
 
-      <section className={styles.screen}>
-        <span className={styles.number}>2</span>
-        <div className={styles.demoStack}>
-          <RevealLines as="h2" trigger="inview">
-            This line reveals from behind its mask as it scrolls into view.
+      <section id="altar" className={styles.hero} data-cursor="Click — enter the forge">
+        <div className={styles.heroText}>
+          <RevealLines as="h1" trigger="mount" className={styles.heroName}>
+            Rachit Mittal
+          </RevealLines>
+          <RevealLines as="p" trigger="mount" delay={0.12} className={styles.heroRole}>
+            Full-stack developer, forging systems with AI.
           </RevealLines>
         </div>
       </section>
 
-      <section className={styles.screen}>
-        <span className={styles.number}>3</span>
-        <ScrollFillText text="THE FORGE IS ALIVE" as="h2" />
+      <section id="throne-room" className={`${styles.placeholder} ${styles.dark}`}>
+        <RevealLines as="h2" trigger="inview" className={styles.placeholderTitle}>
+          The Throne Room
+        </RevealLines>
+        <p className={styles.placeholderNote}>A statement scene — built in a later phase.</p>
       </section>
 
-      <section className={styles.screen}>
-        <span className={styles.number}>4</span>
-        <div className={styles.demoStack} data-cursor="Hover — cursor pill demo">
-          <p>Hover anywhere in this section to see the cursor pill.</p>
-        </div>
+      <section id="armoury" className={`${styles.placeholder} ${styles.tinted}`}>
+        <RevealLines as="h2" trigger="inview" className={styles.placeholderTitle}>
+          The Armoury
+        </RevealLines>
+        <p className={styles.placeholderNote}>
+          Projects, forged one rune at a time — built in a later phase.
+        </p>
       </section>
 
-      <section className={styles.screen}>
-        <span className={styles.number}>5</span>
+      <section id="balcony" className={styles.placeholder}>
+        <RevealLines as="h2" trigger="inview" className={styles.placeholderTitle}>
+          The Balcony
+        </RevealLines>
+        <p className={styles.placeholderNote}>Contact, at sunset — built in a later phase.</p>
       </section>
     </main>
   );

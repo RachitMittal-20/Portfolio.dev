@@ -1,51 +1,69 @@
-.screen {
+/* Altar hero — deliberately no background of its own, so the painted sky
+   and sword rendered by <AltarScene/> on the persistent canvas show
+   through underneath. */
+.hero {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: 100vh;
+  padding: var(--grid-margin);
+  padding-bottom: var(--space-16);
+}
+
+.heroText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  max-width: 34rem;
+}
+
+.heroName {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 600;
+  font-size: var(--text-display-lg);
+  line-height: 0.95;
+  color: var(--ink-900);
+}
+
+.heroRole {
+  font-size: var(--text-lg);
+  color: var(--ink-900);
+  opacity: 0.75;
+}
+
+/* Throne Room / Armoury / Balcony — simple opaque scroll placeholders.
+   Building their real 3D scenes and the camera transitions between them is
+   later work; these just carry the site structure and ids for now. */
+.placeholder {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--space-8);
-  height: 100vh;
+  gap: var(--space-4);
+  min-height: 100vh;
   padding: var(--grid-margin);
   text-align: center;
-  border-bottom: 1px solid var(--stone-200);
-}
-
-.screen:nth-child(odd) {
   background: var(--stone-50);
+  border-top: 1px solid var(--stone-200);
 }
 
-.screen:nth-child(even) {
+.dark {
+  background: var(--night-900);
+  color: var(--stone-50);
+}
+
+.tinted {
   background: var(--stone-200);
 }
 
-.number {
-  position: absolute;
-  top: var(--space-6);
-  left: var(--space-6);
-  font-family: var(--font-display), sans-serif;
-  font-weight: 600;
-  font-size: var(--text-2xl);
-  color: var(--stone-400);
-}
-
-.demoStack {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-6);
-  max-width: 40rem;
-}
-
-.demoStack h1,
-.demoStack h2 {
+.placeholderTitle {
   font-family: var(--font-display), sans-serif;
   font-weight: 600;
   font-size: var(--text-display-sm);
-  line-height: 1.05;
 }
 
-.fadeDemo p {
-  font-size: var(--text-lg);
+.placeholderNote {
+  font-size: var(--text-base);
   color: var(--stone-400);
 }

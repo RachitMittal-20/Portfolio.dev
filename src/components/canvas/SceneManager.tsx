@@ -9,6 +9,7 @@ import { lazy, Suspense } from "react";
 import { useSceneStore } from "@/store/scene";
 
 const SCENES = {
+  altar: lazy(() => import("@/scenes/AltarScene")),
   "gem-demo": lazy(() => import("@/scenes/GemDemoScene")),
 } as const;
 
