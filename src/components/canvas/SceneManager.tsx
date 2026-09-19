@@ -10,6 +10,7 @@ import { useSceneStore } from "@/store/scene";
 
 const SCENES = {
   altar: lazy(() => import("@/scenes/AltarScene")),
+  "throne-room": lazy(() => import("@/scenes/ThroneRoomScene")),
   "gem-demo": lazy(() => import("@/scenes/GemDemoScene")),
 } as const;
 

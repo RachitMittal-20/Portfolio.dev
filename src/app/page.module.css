@@ -31,9 +31,33 @@
   opacity: 0.75;
 }
 
-/* Throne Room / Armoury / Balcony — simple opaque scroll placeholders.
-   Building their real 3D scenes and the camera transitions between them is
-   later work; these just carry the site structure and ids for now. */
+/* Throne Room — bold declarative statement over the scene. No background
+   of its own: <ThroneRoomScene/> sets the dark interior tone on the
+   persistent canvas (scene.background), and this text sits directly over
+   it, the same way the Altar hero text sits over the sky. */
+.statement {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: var(--grid-margin);
+  text-align: center;
+}
+
+.statementText {
+  max-width: 44rem;
+  font-family: var(--font-display), sans-serif;
+  font-weight: 600;
+  font-size: var(--text-display-md);
+  line-height: 1.05;
+  text-transform: uppercase;
+  color: var(--stone-50);
+}
+
+/* Armoury / Balcony — simple opaque scroll placeholders. Building their
+   real 3D scenes and the camera transitions between them is later work;
+   these just carry the site structure and ids for now. */
 .placeholder {
   position: relative;
   display: flex;
@@ -46,11 +70,6 @@
   text-align: center;
   background: var(--stone-50);
   border-top: 1px solid var(--stone-200);
-}
-
-.dark {
-  background: var(--night-900);
-  color: var(--stone-50);
 }
 
 .tinted {
