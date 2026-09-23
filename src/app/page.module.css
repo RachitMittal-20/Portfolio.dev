@@ -55,9 +55,44 @@
   color: var(--stone-50);
 }
 
-/* Armoury / Balcony — simple opaque scroll placeholders. Building their
-   real 3D scenes and the camera transitions between them is later work;
-   these just carry the site structure and ids for now. */
+/* Armoury — no background of its own either, same reasoning as Throne
+   Room: <ArmouryScene/> supplies the dark forge tone behind the cards.
+   The cards themselves are opaque (readability first), so the scene only
+   shows through the gaps and margins around them. */
+.armoury {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 100vh;
+  padding: var(--space-24) var(--grid-margin);
+}
+
+.armouryTitle {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 600;
+  font-size: var(--text-display-sm);
+  text-transform: uppercase;
+  color: var(--stone-50);
+}
+
+.armouryNote {
+  font-size: var(--text-sm);
+  color: var(--stone-400);
+  margin-bottom: var(--space-8);
+}
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--grid-gutter);
+  width: 100%;
+  max-width: 72rem;
+}
+
+/* Balcony — still a simple opaque scroll placeholder; its real 3D scene
+   and the camera transitions between sections are later work. */
 .placeholder {
   position: relative;
   display: flex;
@@ -70,10 +105,6 @@
   text-align: center;
   background: var(--stone-50);
   border-top: 1px solid var(--stone-200);
-}
-
-.tinted {
-  background: var(--stone-200);
 }
 
 .placeholderTitle {

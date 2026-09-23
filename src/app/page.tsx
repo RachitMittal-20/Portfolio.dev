@@ -1,19 +1,21 @@
 "use client";
 
+import ProjectCard from "@/components/sections/ProjectCard";
 import RevealLines from "@/components/motion/RevealLines";
+import { projects } from "@/content/projects";
 import { useSectionScene } from "@/lib/hooks/useSectionScene";
 import styles from "./page.module.css";
 
 // Home (docs/BUILD_PLAN.md section 1.9's site map): Altar hero → Throne
-// Room → Armoury → Balcony. Altar and Throne Room are built out for real
-// (src/scenes/AltarScene.tsx, ThroneRoomScene.tsx) and claim their 3D
-// scene as they scroll into view via useSectionScene — the first real
-// scroll-driven scene switch. Armoury/Balcony are still deliberately
-// simple content-only placeholders — just enough structure and `id`s for
-// later phases.
+// Room → Armoury → Balcony. Altar, Throne Room and Armoury are built out
+// for real (src/scenes/AltarScene.tsx, ThroneRoomScene.tsx,
+// ArmouryScene.tsx) and claim their 3D scene as they scroll into view via
+// useSectionScene. Balcony is still a deliberately simple content-only
+// placeholder — just enough structure and an `id` for a later phase.
 export default function Home() {
   const altarRef = useSectionScene<HTMLElement>("altar");
   const throneRoomRef = useSectionScene<HTMLElement>("throne-room");
+  const armouryRef = useSectionScene<HTMLElement>("armoury");
 
   return (
     <main>
@@ -39,13 +41,17 @@ export default function Home() {
         </RevealLines>
       </section>
 
-      <section id="armoury" className={`${styles.placeholder} ${styles.tinted}`}>
-        <RevealLines as="h2" trigger="inview" className={styles.placeholderTitle}>
+      <section ref={armouryRef} id="armoury" className={styles.armoury}>
+        <RevealLines as="h2" trigger="inview" className={styles.armouryTitle}>
           The Armoury
         </RevealLines>
-        <p className={styles.placeholderNote}>
-          Projects, forged one rune at a time — built in a later phase.
-        </p>
+        <p className={styles.armouryNote}>Four runes forged so far.</p>
+
+        <div className={styles.cardGrid}>
+          {projects.map((project, i) => (
+            <ProjectCard key={project.slug} project={project} delay={i * 0.06} />
+          ))}
+        </div>
       </section>
 
       <section id="balcony" className={styles.placeholder}>
