@@ -91,29 +91,65 @@
   max-width: 72rem;
 }
 
-/* Balcony — still a simple opaque scroll placeholder; its real 3D scene
-   and the camera transitions between sections are later work. */
-.placeholder {
+/* Balcony — no background of its own either: <BalconyScene/> supplies the
+   dusk sky behind the closing statement, contact links and footer. */
+.balcony {
   position: relative;
   display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+  padding: var(--space-16) var(--grid-margin) var(--space-8);
+  color: var(--ink-900);
+}
+
+.balconyContent {
+  display: flex;
+  flex: 1;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: var(--space-4);
-  min-height: 100vh;
-  padding: var(--grid-margin);
   text-align: center;
-  background: var(--stone-50);
-  border-top: 1px solid var(--stone-200);
 }
 
-.placeholderTitle {
+.balconyTitle {
+  max-width: 36rem;
   font-family: var(--font-display), sans-serif;
   font-weight: 600;
-  font-size: var(--text-display-sm);
+  font-size: var(--text-display-md);
+  line-height: 1.05;
 }
 
-.placeholderNote {
-  font-size: var(--text-base);
-  color: var(--stone-400);
+.balconyNote {
+  font-size: var(--text-lg);
+  opacity: 0.75;
+}
+
+.contactLinks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+  list-style: none;
+}
+
+.contactLink {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-2) var(--space-5);
+  border: 1px solid currentColor;
+  border-radius: var(--radius-full);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  transition:
+    background 0.2s var(--ease-std),
+    color 0.2s var(--ease-std);
+}
+
+.contactLink:hover {
+  background: var(--ember-500);
+  color: var(--stone-50);
+  border-color: var(--ember-500);
 }

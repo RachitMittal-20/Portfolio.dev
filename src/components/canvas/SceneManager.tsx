@@ -12,6 +12,7 @@ const SCENES = {
   altar: lazy(() => import("@/scenes/AltarScene")),
   "throne-room": lazy(() => import("@/scenes/ThroneRoomScene")),
   armoury: lazy(() => import("@/scenes/ArmouryScene")),
+  balcony: lazy(() => import("@/scenes/BalconyScene")),
   "gem-demo": lazy(() => import("@/scenes/GemDemoScene")),
 } as const;
 

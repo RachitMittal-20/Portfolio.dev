@@ -1,0 +1,31 @@
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-6);
+  padding-top: var(--space-8);
+  margin-top: var(--space-16);
+  border-top: 1px solid rgba(246, 241, 231, 0.2);
+  font-size: var(--text-sm);
+  color: inherit;
+  opacity: 0.75;
+}
+
+.credit {
+  opacity: 0.8;
+}
+
+.backToTop {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+  opacity: 0.9;
+}
+
+.backToTop:hover {
+  opacity: 1;
+  color: var(--ember-300);
+}
